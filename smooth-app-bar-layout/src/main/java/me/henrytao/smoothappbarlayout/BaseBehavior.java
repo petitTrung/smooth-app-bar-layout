@@ -19,10 +19,12 @@ package me.henrytao.smoothappbarlayout;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.lang.ref.WeakReference;
@@ -252,7 +254,39 @@ public abstract class BaseBehavior extends AppBarLayout.Behavior {
         } else if (vScrollTarget instanceof RecyclerView) {
           ObservableRecyclerView.newInstance((RecyclerView) vScrollTarget, listener);
         }
+        //vScrollTarget.setOnTouchListener(new OnTouchListener() {
+        //  @Override
+        //  public void onTouchEvent(View v, MotionEvent ev) {
+        //    child.dispatchTouchEvent(ev);
+        //  }
+        //});
       }
+    }
+  }
+
+  protected static abstract class OnTouchListener implements View.OnTouchListener {
+
+    public abstract void onTouchEvent(View v, MotionEvent ev);
+
+    private boolean mIsTouched;
+
+    @Override
+    public boolean onTouch(View v, MotionEvent ev) {
+      switch (MotionEventCompat.getActionMasked(ev)) {
+        case MotionEvent.ACTION_DOWN:
+          mIsTouched = true;
+          break;
+        case MotionEvent.ACTION_MOVE:
+          mIsTouched = false;
+          break;
+        case MotionEvent.ACTION_CANCEL:
+        case MotionEvent.ACTION_UP:
+          break;
+      }
+      if (mIsTouched) {
+        onTouchEvent(v, ev);
+      }
+      return false;
     }
   }
 }

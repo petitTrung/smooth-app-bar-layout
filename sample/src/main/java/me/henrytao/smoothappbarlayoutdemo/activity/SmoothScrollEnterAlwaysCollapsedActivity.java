@@ -17,16 +17,20 @@
 package me.henrytao.smoothappbarlayoutdemo.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.henrytao.recyclerview.SimpleRecyclerViewAdapter;
 import me.henrytao.recyclerview.holder.HeaderHolder;
 import me.henrytao.smoothappbarlayoutdemo.R;
@@ -34,6 +38,9 @@ import me.henrytao.smoothappbarlayoutdemo.apdater.DynamicAdapter;
 import me.henrytao.smoothappbarlayoutdemo.util.Utils;
 
 public class SmoothScrollEnterAlwaysCollapsedActivity extends BaseActivity {
+
+  @Bind(R.id.cover)
+  View vCover;
 
   @Bind(android.R.id.list)
   RecyclerView vRecyclerView;
@@ -85,5 +92,25 @@ public class SmoothScrollEnterAlwaysCollapsedActivity extends BaseActivity {
       }
     });
     itemTouchHelper.attachToRecyclerView(vRecyclerView);
+
+    //vCover.setOnTouchListener(new View.OnTouchListener() {
+    //  @Override
+    //  public boolean onTouch(View v, MotionEvent event) {
+    //    Utils.log("custom cover | %d | %d | %d | %d || %d",
+    //        MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP,
+    //        MotionEventCompat.getActionMasked(event));
+    //    switch (MotionEventCompat.getActionMasked(event)) {
+    //      case MotionEvent.ACTION_DOWN:
+    //        getParent().onTouchEvent(event);
+    //        return true;
+    //    }
+    //    return false;
+    //  }
+    //});
+  }
+
+  @OnClick(R.id.cover)
+  protected void onCoverClick() {
+    Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
   }
 }

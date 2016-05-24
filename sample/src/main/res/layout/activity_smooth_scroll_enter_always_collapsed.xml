@@ -35,8 +35,21 @@
       android:layout_height="match_parent"
       app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
+      <me.henrytao.smoothappbarlayout.widget.DispatcherView
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="fitCenter"
+          android:src="@drawable/cover" />
+      </me.henrytao.smoothappbarlayout.widget.DispatcherView>
+
       <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        android:background="@android:color/transparent"
         app:layout_collapseMode="pin"
         app:navigationIcon="@drawable/ic_menu_arrow_back"
         style="@style/AppStyle.MdToolbar" />

@@ -21,9 +21,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.henrytao.smoothappbarlayoutdemo.R;
 import me.henrytao.smoothappbarlayoutdemo.apdater.DynamicAdapter;
 import me.henrytao.smoothappbarlayoutdemo.util.Utils;
@@ -52,5 +54,10 @@ public class GsdScrollEnterAlwaysCollapsedActivity extends BaseActivity {
 
     vRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     vRecyclerView.setAdapter(new DynamicAdapter(Utils.getSampleData()));
+  }
+
+  @OnClick(R.id.cover)
+  protected void onCoverClick() {
+    Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
   }
 }

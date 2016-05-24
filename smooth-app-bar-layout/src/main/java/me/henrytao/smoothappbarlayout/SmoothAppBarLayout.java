@@ -22,10 +22,12 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -90,6 +92,30 @@ public class SmoothAppBarLayout extends AppBarLayout {
     }
     this.mOffsetChangedListeners.add(new WeakReference(listener));
   }
+
+  @Override
+  public boolean onInterceptTouchEvent(MotionEvent ev) {
+    boolean result = super.onInterceptTouchEvent(ev);
+
+    Utils.log("custom onInterceptTouchEvent | %d | %d | %d | %d || %d  %b",
+        MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP,
+        MotionEventCompat.getActionMasked(ev), result);
+
+
+
+    return true;
+  }
+
+  //@Override
+  //public boolean onTouchEvent(MotionEvent ev) {
+  //  boolean result = super.onTouchEvent(ev);
+  //
+  //  Utils.log("custom onTouchEvent | %d | %d | %d | %d || %d  %b",
+  //      MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP,
+  //      MotionEventCompat.getActionMasked(ev), result);
+  //
+  //  return false;
+  //}
 
   @Override
   public void removeOnOffsetChangedListener(OnOffsetChangedListener listener) {
@@ -164,6 +190,16 @@ public class SmoothAppBarLayout extends AppBarLayout {
     } finally {
       a.recycle();
     }
+
+    setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        Utils.log("custom cover | %d | %d | %d | %d || %d",
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP,
+            MotionEventCompat.getActionMasked(event));
+        return true;
+      }
+    });
   }
 
   private void initViews() {
